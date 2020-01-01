@@ -1,0 +1,47 @@
+type Artist {
+  id: ID! @id
+  name: String!
+  folderPath: String!
+  albums: [Album!]! @relation(name: "ArtistToAlbums", onDelete: CASCADE)
+  songs: [Song!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Album {
+  id: ID! @id
+  name: String!
+  folderPath: String!
+  artwork: String
+  release: String
+  year: Int
+  month: Int
+  day: Int
+  bitrate: String
+  format: String
+  artist: Artist! @relation(name: "ArtistToAlbums")
+  songs: [Song!]! @relation(name: "AlbumToSongs", onDelete: CASCADE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Song {
+  id: ID! @id
+  name: String!
+  filePath: String!
+  format: String!
+  artist: Artist!
+  album: Album! @relation(name: "AlbumToSongs")
+  playlists: [Playlist!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Playlist {
+  id: ID! @id
+  name: String!
+  description: String
+  songs: [Song!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
